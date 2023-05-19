@@ -1,9 +1,8 @@
+import logging
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer , WebRtcMode
 import av
 import cv2
-
-from sample_utils.turn import get_ice_servers
 
 
 st.title("My first Streamlit app")
@@ -25,7 +24,7 @@ def callback(frame):
 webrtc_ctx = webrtc_streamer(
     key="object-detection",
     mode=WebRtcMode.SENDRECV,
-    rtc_configuration={"iceServers": get_ice_servers()},
+    rtc_configuration="iceServers":[{urls: ["stun:stun.example.com", "stun:stun-1.example.com"]}],
     video_frame_callback=callback,
     media_stream_constraints={"video": True, "audio": False},
     async_processing=True,
