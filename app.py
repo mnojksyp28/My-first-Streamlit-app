@@ -11,8 +11,7 @@ threshold2 = st.slider("Threshold2", min_value=0, max_value=1000, step=1, value=
 
 rtc_config = {
     "iceServers": [
-        {"urls": "stun:stun.l.google.com:19302"},
-        {"urls": "stun:stun1.l.google.com:19302"},
+        {"urls": "stun:stun.xten.com:3478"},
     ]
 }
 
