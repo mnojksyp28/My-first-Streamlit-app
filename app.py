@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer , WebRtcMode
+from streamlit_webrtc import webrtc_streamer , WebRtcMode,RTCConfiguration
 import av
 import cv2
 
@@ -11,11 +11,11 @@ st.write("Hello, world")
 threshold1 = st.slider("Threshold1", min_value=0, max_value=1000, step=1, value=100)
 threshold2 = st.slider("Threshold2", min_value=0, max_value=1000, step=1, value=200)
 
-rtc_config = {
-    "iceServers": [
-        {"urls": "stun:stun.xten.com:3478"},
+config = RTCConfiguration(
+    iceServers=[
+        {"urls": ["stun:stun.l.google.com:19302"]}
     ]
-}
+)
 
 def callback(frame):
     img = frame.to_ndarray(format="bgr24")
@@ -28,7 +28,7 @@ def callback(frame):
 webrtc_ctx = webrtc_streamer(
     key="object-detection",
     mode=WebRtcMode.SENDRECV,
-    rtc_configuration={"iceServers": "stun:stun.xten.com:3478"},
+    rtc_configuration=config,
     video_frame_callback=callback,
     media_stream_constraints={"video": True, "audio": False},
     async_processing=True,
