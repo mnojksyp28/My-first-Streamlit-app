@@ -1,4 +1,3 @@
-import logging
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer , WebRtcMode
 import av
@@ -24,7 +23,7 @@ def callback(frame):
 webrtc_ctx = webrtc_streamer(
     key="object-detection",
     mode=WebRtcMode.SENDRECV,
-    rtc_configuration="iceServers":[{urls: ["stun:stun.example.com", "stun:stun-1.example.com"]}],
+    rtc_configuration={"iceServers":[{urls: ["stun:stun.example.com", "stun:stun-1.example.com"]}]},
     video_frame_callback=callback,
     media_stream_constraints={"video": True, "audio": False},
     async_processing=True,
