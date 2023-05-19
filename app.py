@@ -1,7 +1,9 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer , RTCConfiguration
+from streamlit_webrtc import webrtc_streamer , WebRtcMode
 import av
 import cv2
+
+
 
 st.title("My first Streamlit app")
 st.write("Hello, world")
@@ -23,4 +25,11 @@ def callback(frame):
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 
-webrtc_streamer(key="example", video_frame_callback=callback,rtc_configuration=rtc_config )
+webrtc_ctx = webrtc_streamer(
+    key="object-detection",
+    mode=WebRtcMode.SENDRECV,
+    rtc_configuration={"iceServers": "stun:stun.xten.com:3478"},
+    video_frame_callback=callback,
+    media_stream_constraints={"video": True, "audio": False},
+    async_processing=True,
+)
